@@ -32,9 +32,13 @@ async def on_message(message: discord.Message):
 # https://discordpy.readthedocs.io/en/stable/api.html?highlight=on_raw_reaction#discord.on_reaction_add
 @client.event
 async def on_reaction_add(reaction: discord.Reaction, user: discord.Member):
+    # Guild means server in DC
+    # Get role first
     guild = user.guild
     role = get(guild.roles, name='Test')
+    # Then add it to user
     await user.add_roles(role)
+    # And send a notification message to the channel
     await reaction.message.channel.send('成功新增 <@&{}> 給 <@!{}>'.format(role.id, user.id))
 
 # Run the Discord BOT

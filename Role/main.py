@@ -28,23 +28,14 @@ async def on_message(message: discord.Message):
     ))
     await message.channel.send(message.content)
 
-# When client add reaction, on_raw_reaction_add() will be triggered
-# We use "on_raw_reaction_add" instead of "on_reaction_add" to get the "member" attribute
-# https://discordpy.readthedocs.io/en/stable/api.html?highlight=on_raw_reaction#discord.on_raw_reaction_add
+# When client add reaction, on_reaction_add() will be triggered
+# https://discordpy.readthedocs.io/en/stable/api.html?highlight=on_raw_reaction#discord.on_reaction_add
 @client.event
-async def on_raw_reaction_add(payload: discord.RawReactionActionEvent):
-    print('Receive reaction {}\tSend by {}'.format(payload.emoji, payload.member.name))
-    
-    # guild here means "server" in DC
-    # Know which guild we're in, and figure out all roles in that guild
-    guild = client.get_guild(payload.guild_id)
-    # Then get the role with name "Test"
+async def on_reaction_add(reaction: discord.Reaction, user: discord.Member):
+    guild = user.guild
     role = get(guild.roles, name='Test')
-
-    # Add role to the member
-    await payload.member.add_roles(role)
-    # Send notification message
-    await client.get_channel(payload.channel_id).send('成功新增 <@&{}> 給 <@!{}>'.format(role.id, payload.user_id))
+    await user.add_roles(role)
+    await reaction.message.channel.send('成功新增 <@&{}> 給 <@!{}>'.format(role.id, user.id))
 
 # Run the Discord BOT
 if __name__ == '__main__':

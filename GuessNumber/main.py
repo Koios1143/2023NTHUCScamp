@@ -22,8 +22,7 @@ async def on_ready():
 @bot.command()
 async def start(ctx: commands.Context, arg: str):
     global target
-    assert (n := int(arg)) > 0
-    target = random.randint(1, n)
+    target = random.randint(1, int(arg))
     print(f"{ctx.author} start a new game with answer being {target}!!")
     await ctx.send(f"{ctx.author} start a new game with the closed interval [1, {arg}]!!")
 
@@ -33,12 +32,12 @@ async def start(ctx: commands.Context, arg: str):
 async def guess(ctx: commands.Context, arg: str):
     global target
     if target < 0:
-        return await ctx.send("Please start a new game first!!")
+        return await ctx.send("Please start a new game first🙏")
     if target == int(arg):
         target = -1
-        await ctx.send("Bingo!!")
+        await ctx.send("Bingo🎉")
     else:
-        await ctx.send("Wrong answer QQ")
+        await ctx.send("Wrong answer😿")
 
 
 # Run the Discord BOT

@@ -25,11 +25,11 @@ async def on_ready():
 # @bot.tree.command(name='<指令名稱>', description='<指令敘述：說明指令功能>')
 # async def <指令名稱>(interaction: discord.Interaction, msg: str):
 #     指令操作...
-#     await interaction.response.send_message("<傳送訊息>")
+#     await interaction.channel.send("<傳送訊息>")
 
 # Example
 @bot.tree.command(name='echo', description='傳入一個參數 msg，並回傳 msg 的內容')
 async def echo(interaction: discord.Interaction, msg: str):
-    await interaction.response.send_message(msg)
+    await interaction.channel.send(msg)
 
 bot.run(ACCESS_TOKEN)
